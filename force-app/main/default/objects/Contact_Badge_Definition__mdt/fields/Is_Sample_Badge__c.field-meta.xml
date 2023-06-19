@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Sample_Badge__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Do not delete. Used in test scenarios.</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Do not delete. Used in test scenarios.</inlineHelpText>
+    <label>Is Sample Badge</label>
+    <type>Checkbox</type>
+</CustomField>

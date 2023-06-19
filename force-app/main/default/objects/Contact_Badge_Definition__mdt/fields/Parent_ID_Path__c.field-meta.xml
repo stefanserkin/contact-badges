@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Parent_ID_Path__c</fullName>
+    <description>The API path to the parent Contact or Account ID from the child object</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>The API path to the parent Contact or Account ID from the child object (e.g. ContactId,  AccountId, My_Custom_Contact_Lookup__c,  My_Custom_Contact_Lookup__r.AccountId)</inlineHelpText>
+    <label>Parent ID Path</label>
+    <length>255</length>
+    <required>true</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

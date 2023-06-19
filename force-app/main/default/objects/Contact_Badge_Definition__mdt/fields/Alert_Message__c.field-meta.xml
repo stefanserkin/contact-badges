@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Alert_Message__c</fullName>
+    <description>When Alert is checked, this message displays in the pop-up window a page loads. Use {!My_Custom_Field__c} syntax to display merged values from the child object</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>When Alert is checked, this message displays in the pop-up window a page loads. Use {!My_Custom_Field__c} syntax to display merged values from the child object</inlineHelpText>
+    <label>Alert Message</label>
+    <length>5000</length>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

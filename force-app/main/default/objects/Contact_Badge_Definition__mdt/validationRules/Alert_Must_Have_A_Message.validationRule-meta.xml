@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Alert_Must_Have_A_Message</fullName>
+    <active>true</active>
+    <description>If Alert is checked, an Alert Message must be defined</description>
+    <errorConditionFormula>Alert__c &amp;&amp; ISBLANK( Alert_Message__c )</errorConditionFormula>
+    <errorDisplayField>Alert_Message__c</errorDisplayField>
+    <errorMessage>If Alert is checked, an Alert Message must be defined</errorMessage>
+</ValidationRule>
