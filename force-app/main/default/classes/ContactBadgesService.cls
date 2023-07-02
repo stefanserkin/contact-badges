@@ -19,31 +19,6 @@ public with sharing class ContactBadgesService {
     }
 
     /****************************************************
-     * Wrapper with all the attributes needed in component
-     ****************************************************/
-
-    public class BadgeDataWrapper {
-        @AuraEnabled
-        public Id id {get;set;}
-        @AuraEnabled
-        public String objType {get;set;}
-        @AuraEnabled
-        public String label {get;set;}
-        @AuraEnabled
-        public String colorStyle {get;set;}
-        @AuraEnabled
-        public String labelStyle {get;set;}
-        @AuraEnabled
-        public String iconName {get;set;}
-        @AuraEnabled
-        public String fieldSet {get;set;}
-        @AuraEnabled
-        public Boolean hasAlert {get;set;}
-        @AuraEnabled
-        public String alertMessage {get;set;}
-    }
-
-    /****************************************************
      * Returns a list of all badge definitions, sorted by 
      *     the sort order defined in the custom metadata record
      ****************************************************/
@@ -96,10 +71,10 @@ public with sharing class ContactBadgesService {
                 badge.colorStyle = ContactBadgesHelper.getBadgeColorStyle(definition);
                 badge.labelStyle = ContactBadgesHelper.getBadgeLabelStyle(definition);
                 badge.iconName   = ContactBadgesHelper.getBadgeIconName(definition);
-                badge.fieldSet   = String.isBlank(definition.Additional_Detail_Fields__c) ? 
-                    DEFAULT_BADGE_FIELDSET : 
-                    definition.Additional_Detail_Fields__c;
-                if (definition.Alert__c) { // && verifyFirstSessionVisit(recordId)
+                badge.fieldSet   = String.isBlank(definition.Additional_Detail_Fields__c) 
+                    ? DEFAULT_BADGE_FIELDSET 
+                    : definition.Additional_Detail_Fields__c;
+                if (definition.Alert__c && verifyFirstSessionVisit(recordId)) {
                     badge.hasAlert     = true;
                     badge.alertMessage = ContactBadgesHelper.getBadgeAlertMessage(definition, obj);
                 } else {
@@ -132,6 +107,31 @@ public with sharing class ContactBadgesService {
             isFirstVisit = true;
         }
         return isFirstVisit;
+    }
+
+    /****************************************************
+     * Wrapper with all the attributes needed in component
+     ****************************************************/
+
+     public class BadgeDataWrapper {
+        @AuraEnabled
+        public Id id {get;set;}
+        @AuraEnabled
+        public String objType {get;set;}
+        @AuraEnabled
+        public String label {get;set;}
+        @AuraEnabled
+        public String colorStyle {get;set;}
+        @AuraEnabled
+        public String labelStyle {get;set;}
+        @AuraEnabled
+        public String iconName {get;set;}
+        @AuraEnabled
+        public String fieldSet {get;set;}
+        @AuraEnabled
+        public Boolean hasAlert {get;set;}
+        @AuraEnabled
+        public String alertMessage {get;set;}
     }
 
 }

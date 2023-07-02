@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Sample Big Spender Badge</label>
+    <protected>true</protected>
+    <values>
+        <field>Active__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Additional_Detail_Fields__c</field>
+        <value xsi:type="xsd:string">Name,Amount,StageName,CloseDate</value>
+    </values>
+    <values>
+        <field>Alert_Message__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Alert__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Background_Color__c</field>
+        <value xsi:type="xsd:string">9e9511</value>
+    </values>
+    <values>
+        <field>Child_Object__c</field>
+        <value xsi:type="xsd:string">Opportunity</value>
+    </values>
+    <values>
+        <field>Filter_Criteria__c</field>
+        <value xsi:type="xsd:string">Amount &gt;= 10000 
+AND StageName = &apos;Closed Won&apos; 
+AND CloseDate &gt;= LAST_N_DAYS:30</value>
+    </values>
+    <values>
+        <field>Icon_Name__c</field>
+        <value xsi:type="xsd:string">utility:moneybag</value>
+    </values>
+    <values>
+        <field>Is_Sample_Badge__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Label_Color__c</field>
+        <value xsi:type="xsd:string">ffffff</value>
+    </values>
+    <values>
+        <field>Label__c</field>
+        <value xsi:type="xsd:string">Big Spender</value>
+    </values>
+    <values>
+        <field>Order_By__c</field>
+        <value xsi:type="xsd:string">CloseDate DESC</value>
+    </values>
+    <values>
+        <field>Parent_ID_Path__c</field>
+        <value xsi:type="xsd:string">ContactId</value>
+    </values>
+    <values>
+        <field>Parent_Object__c</field>
+        <value xsi:type="xsd:string">Contact</value>
+    </values>
+    <values>
+        <field>Sort_Order__c</field>
+        <value xsi:type="xsd:double">3.0</value>
+    </values>
+</CustomMetadata>

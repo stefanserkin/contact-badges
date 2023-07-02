@@ -6,7 +6,7 @@ public with sharing class ContactBadgesHelper {
 
     private static final String DEFAULT_BACKGROUND_COLOR = '#D3D3D3';
     private static final String DEFAULT_LABEL_COLOR = '#000000';
-    private static final String DEFAULT_ICON_NAME = 'utility:alert';
+    private static final String DEFAULT_ICON_NAME = 'utility:info';
     private static final String BADGE_LABEL_TYPE_VALUE = 'Value';
     private static final String BADGE_LABEL_TYPE_FIELD_REFERENCE = 'Field Reference';
     private static final String MERGE_FIELD_REGEX = '\\{!.+?\\}';

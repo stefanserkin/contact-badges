@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Sample Birthday Badge</label>
+    <protected>true</protected>
+    <values>
+        <field>Active__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Additional_Detail_Fields__c</field>
+        <value xsi:type="xsd:string">Birthdate</value>
+    </values>
+    <values>
+        <field>Alert_Message__c</field>
+        <value xsi:type="xsd:string">It&apos;s my birthday! {!Birthdate}</value>
+    </values>
+    <values>
+        <field>Alert__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Background_Color__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Child_Object__c</field>
+        <value xsi:type="xsd:string">Contact</value>
+    </values>
+    <values>
+        <field>Filter_Criteria__c</field>
+        <value xsi:type="xsd:string">Birthdate = TODAY</value>
+    </values>
+    <values>
+        <field>Icon_Name__c</field>
+        <value xsi:type="xsd:string">utility:key_dates</value>
+    </values>
+    <values>
+        <field>Is_Sample_Badge__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Label_Color__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Label__c</field>
+        <value xsi:type="xsd:string">It&apos;s my birthday! {!Birthdate}</value>
+    </values>
+    <values>
+        <field>Order_By__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Parent_ID_Path__c</field>
+        <value xsi:type="xsd:string">Id</value>
+    </values>
+    <values>
+        <field>Parent_Object__c</field>
+        <value xsi:type="xsd:string">Contact</value>
+    </values>
+    <values>
+        <field>Sort_Order__c</field>
+        <value xsi:type="xsd:double">1.0</value>
+    </values>
+</CustomMetadata>
