@@ -1,0 +1,49 @@
+<template>
+    <!-- ALERT MESSAGES -->
+    <template if:true={showModal}>
+        <c-contact-badges-alerts
+            modal-header={modalHeader}
+            modal-content={alertMessages} 
+            oncancel={handleModalClose} 
+            onokay={handleModalClose} 
+            onclose={handleModalClose}
+        ></c-contact-badges-alerts>
+    </template>
+    <!-- BADGE DETAILS MODAL -->
+    <template if:true={showBadgeDetails}>
+        <c-contact-badges-modal 
+            selectedbadge={badge} 
+            contactid={recordId}
+            object={objType} 
+            fieldset={fieldSetArray} 
+            objlabel={label} 
+            oncancel={handleModalClose} 
+            onokay={handleModalClose} 
+            onclose={handleModalClose} 
+        ></c-contact-badges-modal>
+    </template>
+    <!-- ROW OF BADGES DISPLAY -->
+    <lightning-card if:true={displayBadges}>
+        <template for:each={badgeData} for:item="badge" for:index="index">
+            <div key={badge.id} 
+                style="display:inline-block;" 
+                data-badgeid={badge.id} 
+                data-objtype={badge.objType} 
+                data-fieldset={badge.fieldSet} 
+                data-label={badge.label} 
+                onclick={handleBadgeClick} 
+                class="contact-badge">
+                <div style={badge.colorStyle}>
+                    <div style={badge.labelStyle}>
+                        <lightning-badge 
+                            icon-name={badge.iconName}
+                            label={badge.label} 
+                            class="slds-var-m-horizontal_small slds-var-m-bottom_small" 
+                        ></lightning-badge>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </lightning-card>
+
+</template>
