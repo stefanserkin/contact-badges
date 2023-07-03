@@ -6,7 +6,7 @@
     }
   ],
   "name": "ContactBadges",
-  "namespace": "",
+  "namespace": "sscb",
   "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "57.0"
 }
