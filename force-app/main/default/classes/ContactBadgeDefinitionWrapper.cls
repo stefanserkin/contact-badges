@@ -1,4 +1,4 @@
-public class ContactBadgeDefinitionWrapper implements Comparable {
+public with sharing class ContactBadgeDefinitionWrapper implements Comparable {
 
     public Contact_Badge_Definition__mdt cbd;
 
