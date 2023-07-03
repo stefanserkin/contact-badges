@@ -2,11 +2,20 @@
   "packageDirectories": [
     {
       "path": "force-app",
-      "default": true
+      "default": true,
+      "package": "Contact Badges",
+      "versionName": "ver 0.1",
+      "versionNumber": "0.1.0.NEXT",
+      "versionDescription": "Contact Badges from SerkinSolutions"
     }
   ],
   "name": "ContactBadges",
   "namespace": "sscb",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "57.0"
+  "sourceApiVersion": "57.0",
+  "packageAliases": {
+    "Contact Badges": "0HoDn000000bmwPKAQ",
+    "Contact Badges@0.1.0-1": "04tDn000000B23oIAC",
+    "Contact Badges@0.1.0-2": "04tDn000000B23tIAC"
+  }
 }
