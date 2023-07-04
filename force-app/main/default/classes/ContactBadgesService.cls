@@ -53,9 +53,17 @@ public with sharing class ContactBadgesService {
             if ((isTestScenario && !definition.Is_Sample_Badge__c) || (!isTestScenario && !definition.Active__c)) {
                 continue;
             }
+
             // Query for related records
             String query = ContactBadgesHelper.getQueryFromDefinition(definition);
-            List<SObject> queryResults = Database.query(query);
+            List<SObject> queryResults;
+            try {
+                queryResults = Database.query(query);
+            } catch (System.QueryException ex) {
+                // User does not have required CRUD/FLS access
+                continue;
+            }
+
             // Create wrapper from mdt details and add to list
             for (SObject obj : queryResults) {
                 BadgeDataWrapper badge = new BadgeDataWrapper();
@@ -73,7 +81,7 @@ public with sharing class ContactBadgesService {
                 badge.iconName   = ContactBadgesHelper.getBadgeIconName(definition);
                 badge.fieldSet   = String.isBlank(definition.Additional_Detail_Fields__c) 
                     ? DEFAULT_BADGE_FIELDSET 
-                    : definition.Additional_Detail_Fields__c;
+                    : definition.Additional_Detail_Fields__c.replaceAll('\\s+', '');
                 if (definition.Alert__c && verifyFirstSessionVisit(recordId)) {
                     badge.hasAlert     = true;
                     badge.alertMessage = ContactBadgesHelper.getBadgeAlertMessage(definition, obj);
