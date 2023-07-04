@@ -46,4 +46,8 @@
         </template>
     </lightning-card>
 
+    <lightning-card if:true={error}>
+        <p class="slds-var-m-around_medium">Error: {errorMessage}</p>
+    </lightning-card>
+
 </template>

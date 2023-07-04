@@ -39,11 +39,11 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Parent_Object__c</field>
+                <field>Child_Object__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Child_Object__c</field>
+                <field>Parent_Object__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -161,7 +161,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hDH000003hAbR</masterLabel>
+        <masterLabel>00h010000011ggJ</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

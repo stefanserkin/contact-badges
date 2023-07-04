@@ -8,6 +8,7 @@ import FIRST_NAME_FIELD from '@salesforce/schema/Contact.FirstName';
 export default class ContactBadges extends NavigationMixin(LightningElement) {
     @api recordId;
     @track error;
+    errorMessage;
 
     @track showModal = false;
     @track showBadgeDetails = false;
@@ -62,8 +63,14 @@ export default class ContactBadges extends NavigationMixin(LightningElement) {
             }
             this.error = undefined;
         } else if (result.error) {
-            this.badgeData = undefined;
+            console.error(result.error);
             this.error = result.error;
+            if (Array.isArray(this.error.body)) {
+                this.errorMessage = this.error.body.map(e => e.message).join(', ');
+            } else if (typeof this.error.body.message === 'string') {
+                this.errorMessage = this.error.body.message;
+            }
+            this.badgeData = undefined;
         }
     }
 
