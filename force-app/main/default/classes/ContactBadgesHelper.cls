@@ -58,7 +58,8 @@ public with sharing class ContactBadgesHelper {
         if (!String.isBlank(definition.Filter_Criteria__c)) {
             query += 'AND ' + definition.Filter_Criteria__c + ' ';
         }
-
+        query += 'WITH USER_MODE ';
+        
         // ORDER BY
         if (!String.isBlank(definition.Order_By__c)) {
             query += 'ORDER BY ' + definition.Order_By__c;
