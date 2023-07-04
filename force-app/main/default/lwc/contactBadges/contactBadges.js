@@ -5,6 +5,8 @@ import getBadgeData from '@salesforce/apex/ContactBadgesController.getBadgeData'
 import ACCOUNT_ID_FIELD from '@salesforce/schema/Contact.AccountId';
 import FIRST_NAME_FIELD from '@salesforce/schema/Contact.FirstName';
 
+import hasViewAccess from '@salesforce/customPermission/Contact_Badges_View_Access';
+
 export default class ContactBadges extends NavigationMixin(LightningElement) {
     @api recordId;
 
@@ -28,6 +30,10 @@ export default class ContactBadges extends NavigationMixin(LightningElement) {
 
     accountId;
     firstName;
+
+    get canAccessComponent() {
+        return hasViewAccess;
+    }
 
     @wire(getRecord, { 
         recordId : '$recordId', 

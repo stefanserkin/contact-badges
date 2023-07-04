@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Users with this permission can view the Contact Badges component when present on a Contact Record Page</description>
+    <isLicensed>false</isLicensed>
+    <label>Contact Badges View Access</label>
+</CustomPermission>
