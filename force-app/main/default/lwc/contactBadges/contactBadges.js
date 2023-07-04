@@ -7,7 +7,9 @@ import FIRST_NAME_FIELD from '@salesforce/schema/Contact.FirstName';
 
 export default class ContactBadges extends NavigationMixin(LightningElement) {
     @api recordId;
+
     @track error;
+    errorMessageIntro = `The Contact Badges component has an error. Check Contact Badge Definition custom metadata configuration.`;
     errorMessage;
 
     @track showModal = false;
@@ -63,7 +65,6 @@ export default class ContactBadges extends NavigationMixin(LightningElement) {
             }
             this.error = undefined;
         } else if (result.error) {
-            console.error(result.error);
             this.error = result.error;
             if (Array.isArray(this.error.body)) {
                 this.errorMessage = this.error.body.map(e => e.message).join(', ');

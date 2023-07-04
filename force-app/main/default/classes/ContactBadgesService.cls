@@ -1,7 +1,7 @@
 public with sharing class ContactBadgesService {
 
     private static final String CACHE_KEY_PREFIX = 'cb';
-    private static final String CACHE_PARTITION_NAME = 'local.ContactBadges';
+    private static final String CACHE_PARTITION_NAME = 'sscb.ContactBadges';
     private static final String DEFAULT_BADGE_FIELDSET = 'Name';
 
     @TestVisible static Boolean isTestScenario = false;
