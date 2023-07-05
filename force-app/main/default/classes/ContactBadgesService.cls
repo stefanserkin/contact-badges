@@ -49,7 +49,12 @@ public with sharing class ContactBadgesService {
         List<BadgeDataWrapper> lstBadgeData = new List<BadgeDataWrapper>();
         // Create set to store label names to avoid duplicates
         Set<String> setLabelNames = new Set<String>();
+        // Check platform cache for previous visits in the current session
+        Boolean isFirstVisit = verifyFirstSessionVisit(recordId);
+        
         for (Contact_Badge_Definition__mdt definition : lstDefinitions) {
+            // In test scenarios, must be a sample badge
+            // In live scenarios, must be an active badge
             if ((isTestScenario && !definition.Is_Sample_Badge__c) || (!isTestScenario && !definition.Active__c)) {
                 continue;
             }
@@ -82,7 +87,7 @@ public with sharing class ContactBadgesService {
                 badge.fieldSet   = String.isBlank(definition.Additional_Detail_Fields__c) 
                     ? DEFAULT_BADGE_FIELDSET 
                     : definition.Additional_Detail_Fields__c.replaceAll('\\s+', '');
-                if (definition.Alert__c && verifyFirstSessionVisit(recordId)) {
+                if (definition.Alert__c && isFirstVisit) {
                     badge.hasAlert     = true;
                     badge.alertMessage = ContactBadgesHelper.getBadgeAlertMessage(definition, obj);
                 } else {
@@ -102,15 +107,19 @@ public with sharing class ContactBadgesService {
      ****************************************************/
 
     private static Boolean verifyFirstSessionVisit(String recordId) {
+        System.debug(':::: entered verifyFirstSessionVisity');
         Boolean isFirstVisit;
         // Create cache key out of user and contact ids
         String userId = UserInfo.getUserId();
         String cacheContactKey = CACHE_KEY_PREFIX + userId + recordId;
+        System.debug(':::: cacheContactKey --> ' + cacheContactKey);
         // Create instance of session partition
         Cache.SessionPartition part = Cache.Session.getPartition(CACHE_PARTITION_NAME);
         if (part.contains(cacheContactKey)) {
+            System.debug(':::: partition contains key');
             isFirstVisit = false;
         } else {
+            System.debug(':::: partition does not contain key');
             part.put(cacheContactKey, Datetime.now());
             isFirstVisit = true;
         }

@@ -1,7 +1,7 @@
-@isTest
+@IsTest
 private class ContactBadgeDefinitionWrapper_Test {
     
-    @isTest
+    @IsTest
     static void testWrapperSorting() {
         ContactBadgesService.isTestScenario = true;
         

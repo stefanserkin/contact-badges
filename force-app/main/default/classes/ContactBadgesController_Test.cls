@@ -1,9 +1,9 @@
-@isTest
+@IsTest
 private class ContactBadgesController_Test {
 
     private static List<Contact_Badge_Definition__mdt> lstDefinitions = Contact_Badge_Definition__mdt.getAll().values();
 
-    @isTest
+    @IsTest
     static void testBadgesFromController() {
         ContactBadgesService.isTestScenario = true;
         String strContactTitle = 'Third Basemen';

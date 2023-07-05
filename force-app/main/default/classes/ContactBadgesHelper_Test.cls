@@ -1,15 +1,23 @@
-@isTest
+@IsTest
 private class ContactBadgesHelper_Test {
 
+    private static final String CONTACT_TITLE = 'Third Baseman';
+    private static final String CONTACT_EMAIL = 'capn@mets.com';
+
     private static Contact_Badge_Definition__mdt birthdayBadgeDefinition = Contact_Badge_Definition__mdt.getInstance('Sample_Birthday_Badge');
-    
-    @isTest
-    static void testGetBadgeLabel() {
+
+    @TestSetup
+    static void makeData() {
         Account acc = new Account(Name='Wright Household');
         insert acc;
 
-        Contact ct = new Contact(AccountId=acc.Id, FirstName='David', LastName='Wright', Email='capn@mets.com', Birthdate=Date.today().addYears(-30), Title='Third Basemen');
+        Contact ct = new Contact(AccountId=acc.Id, FirstName='David', LastName='Wright', Email=CONTACT_EMAIL, Birthdate=Date.today().addYears(-30), Title=CONTACT_TITLE);
         insert ct;
+    }
+    
+    @IsTest
+    static void testGetBadgeLabel() {
+        Contact ct = [SELECT Id, Birthdate FROM Contact WHERE Email = :CONTACT_EMAIL LIMIT 1];
         
         Test.startTest();
         String badgeLabel = ContactBadgesHelper.getBadgeLabel(birthdayBadgeDefinition, ct);
@@ -20,13 +28,9 @@ private class ContactBadgesHelper_Test {
         System.assert(badgeLabel.contains(expectedLabel), 'Unexpected label for birthday badge');
     }
     
-    @isTest
+    @IsTest
     static void testGetBadgeAlertMessage() {
-        Account acc = new Account(Name='Wright Household');
-        insert acc;
-
-        Contact ct = new Contact(AccountId=acc.Id, FirstName='David', LastName='Wright', Email='capn@mets.com', Birthdate=Date.today().addYears(-30), Title='Third Basemen');
-        insert ct;
+        Contact ct = [SELECT Id, Birthdate FROM Contact WHERE Email = :CONTACT_EMAIL LIMIT 1];
         
         Test.startTest();
         String badgeAlertMessage = ContactBadgesHelper.getBadgeAlertMessage(birthdayBadgeDefinition, ct);
@@ -37,7 +41,7 @@ private class ContactBadgesHelper_Test {
         System.assert(badgeAlertMessage.contains(expectedMessage), 'Unexpected alert message for birthday badge');
     }
 
-    @isTest
+    @IsTest
     static void testGetBadgeColorStyle() {
         Test.startTest();
         String badgeColorStyle = ContactBadgesHelper.getBadgeColorStyle(birthdayBadgeDefinition);
@@ -47,7 +51,7 @@ private class ContactBadgesHelper_Test {
         System.assertEquals(expectedString, badgeColorStyle, 'Unexpected string for badge color style');
     }
 
-    @isTest
+    @IsTest
     static void testGetBadgeLabelStyle() {
         Test.startTest();
         String badgeLabelStyle = ContactBadgesHelper.getBadgeLabelStyle(birthdayBadgeDefinition);
@@ -57,7 +61,7 @@ private class ContactBadgesHelper_Test {
         System.assertEquals(expectedString, badgeLabelStyle, 'Unexpected string for badge label style');
     }
 
-    @isTest
+    @IsTest
     static void testGetBadgeIconName() {
         Test.startTest();
         String badgeIconName = ContactBadgesHelper.getBadgeIconName(birthdayBadgeDefinition);

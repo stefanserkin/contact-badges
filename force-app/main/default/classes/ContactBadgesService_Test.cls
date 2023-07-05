@@ -1,29 +1,37 @@
-@isTest
+@IsTest
 private class ContactBadgesService_Test {
 
     private static List<Contact_Badge_Definition__mdt> lstDefinitions = Contact_Badge_Definition__mdt.getAll().values();
     private static final String CONTACT_TITLE = 'Third Baseman';
+    private static final String CONTACT_EMAIL = 'capn@mets.com';
 
-    @isTest
+    @TestSetup
+    static void makeData() {
+        Account acc = new Account(Name='Wright Household');
+        insert acc;
+        Contact ct = new Contact(AccountId=acc.Id, FirstName='David', LastName='Wright', Email=CONTACT_EMAIL, Birthdate=Date.today(), Title=CONTACT_TITLE);
+        insert ct;
+    }
+
+    @IsTest
     static void testBadgeWithDynamicLabel() {
         ContactBadgesService.isTestScenario = true;
 
-        Account acc = new Account(Name='Wright Household');
-        insert acc;
-
-        Contact ct = new Contact(AccountId=acc.Id, FirstName='David', LastName='Wright', Email='capn@mets.com', Birthdate=Date.today(), Title=CONTACT_TITLE);
-        insert ct;
+        Contact ct = [SELECT Id, AccountId FROM Contact WHERE Email = :CONTACT_EMAIL LIMIT 1];
 
         List<ContactBadgesService.BadgeDataWrapper> wrapperResult = new List<ContactBadgesService.BadgeDataWrapper>();
         
         Test.startTest();
-        wrapperResult = ContactBadgesService.getBadgeDataForContact(ct.Id, acc.Id);
+        wrapperResult = ContactBadgesService.getBadgeDataForContact(ct.Id, ct.AccountId);
         Test.stopTest();
 
         Boolean foundMetsBadge = false;
         Boolean foundBirthdayBadge = false;
         for (ContactBadgesService.BadgeDataWrapper badge : wrapperResult) {
             if (badge.label.contains(CONTACT_TITLE)) {
+                System.debug('::::: mets alert message: ' + badge.alertMessage);
+                System.debug('::::: mets alert: ' + badge.hasAlert);
+                System.debug('::::: mets label: ' + badge.label);
                 foundMetsBadge = true;
             }
             if (badge.label.toLowerCase().contains('birthday')) {
@@ -37,19 +45,15 @@ private class ContactBadgesService_Test {
         
     }
 
-    @isTest
+    @IsTest
     static void testDuplicateBadgeLabels() {
         ContactBadgesService.isTestScenario = true;
 
-        Account acc = new Account(Name='Wright Household');
-        insert acc;
-
-        Contact ct = new Contact(AccountId=acc.Id, FirstName='David', LastName='Wright', Email='capn@mets.com', Birthdate=Date.today(), Title=CONTACT_TITLE);
-        insert ct;
+        Contact ct = [SELECT Id, AccountId FROM Contact WHERE Email = :CONTACT_EMAIL LIMIT 1];
 
         List<Opportunity> lstOppys = new List<Opportunity>();
-        Opportunity oppy  = new Opportunity(Name='Test Oppy', ContactId=ct.Id, AccountId=acc.Id, Amount=100000, StageName='Closed Won', CloseDate=Date.today().addDays(-1));
-        Opportunity oppy2 = new Opportunity(Name='Test Oppy 2', ContactId=ct.Id, AccountId=acc.Id, Amount=100001, StageName='Closed Won', CloseDate=Date.today().addDays(-2));
+        Opportunity oppy  = new Opportunity(Name='Test Oppy', ContactId=ct.Id, AccountId=ct.AccountId, Amount=100000, StageName='Closed Won', CloseDate=Date.today().addDays(-1));
+        Opportunity oppy2 = new Opportunity(Name='Test Oppy 2', ContactId=ct.Id, AccountId=ct.AccountId, Amount=100001, StageName='Closed Won', CloseDate=Date.today().addDays(-2));
         lstOppys.add(oppy);
         lstOppys.add(oppy2);
         insert lstOppys;
@@ -57,33 +61,29 @@ private class ContactBadgesService_Test {
         List<ContactBadgesService.BadgeDataWrapper> wrapperResult = new List<ContactBadgesService.BadgeDataWrapper>();
         
         Test.startTest();
-        wrapperResult = ContactBadgesService.getBadgeDataForContact(ct.Id, acc.Id);
+        wrapperResult = ContactBadgesService.getBadgeDataForContact(ct.Id, ct.AccountId);
         Test.stopTest();
 
         System.assert(wrapperResult.size() > 0, 'Did not find matching badge for contact');
 
+        Set<String> setLabels = new Set<String>();
         for (ContactBadgesService.BadgeDataWrapper badge : wrapperResult) {
-            if (badge.label == 'Major gift in last 30 days') {
-                System.assertEquals(oppy.Id, badge.id, 'Received badge for incorrect opportunity');
-            }
+            Assert.isFalse(setLabels.contains(badge.label), 'Should not have duplicate badge labels');
+            setLabels.add(badge.label);
         }
-                
+
     }
     
-    @isTest
+    @IsTest
     static void testBadgeWithNoDefinedFieldSet() {
         ContactBadgesService.isTestScenario = true;
 
-        Account acc = new Account(Name='Wright Household');
-        insert acc;
-
-        Contact ct = new Contact(AccountId=acc.Id, FirstName='David', LastName='Wright', Email='capn@mets.com', Birthdate=Date.today(), Title=CONTACT_TITLE);
-        insert ct;
+        Contact ct = [SELECT Id, AccountId FROM Contact WHERE Email = :CONTACT_EMAIL LIMIT 1];
 
         List<ContactBadgesService.BadgeDataWrapper> wrapperResult = new List<ContactBadgesService.BadgeDataWrapper>();
         
         Test.startTest();
-        wrapperResult = ContactBadgesService.getBadgeDataForContact(ct.Id, acc.Id);
+        wrapperResult = ContactBadgesService.getBadgeDataForContact(ct.Id, ct.AccountId);
         Test.stopTest();
 
         Boolean foundMetsBadge = false;
@@ -95,6 +95,56 @@ private class ContactBadgesService_Test {
         }
         System.assert(foundMetsBadge, 'Did not find Mets badge');
         
+    }
+
+    @IsTest
+    static void testInsufficientAccess() {
+        UserRole uRole = new UserRole(DeveloperName = 'TestCustomRole', Name = 'Test Custom Role');
+        insert uRole;
+        
+        Profile profile = [SELECT Id FROM Profile WHERE Name = 'Minimum Access - Salesforce' LIMIT 1];
+        User u = createTestUser(uRole.Id, profile.Id, 'Test', 'User');
+        insert u;
+
+        // Give the user access to contact badges
+        PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'Contact_Badges_Access' LIMIT 1];
+        insert new PermissionSetAssignment(AssigneeId = u.Id, PermissionSetId = permSet.Id);
+
+        Contact ct = [SELECT Id, AccountId FROM Contact WHERE Email = :CONTACT_EMAIL LIMIT 1];
+        Id ctId  = ct.Id;
+        Id accId = ct.AccountId;
+
+        List<ContactBadgesService.BadgeDataWrapper> wrapperResult = new List<ContactBadgesService.BadgeDataWrapper>();
+
+        Test.startTest();
+        System.runAs(u) {
+            wrapperResult = ContactBadgesService.getBadgeDataForContact(ctId, accId);
+        }
+        Test.stopTest();
+
+        System.assert(wrapperResult.isEmpty(), 'User with insufficient access should not have received badge results');
+    }
+
+    private static User createTestUser(Id roleId, Id profileId, String firstName, String lastName) {
+        String orgId      = UserInfo.getOrganizationId();
+        String dateString = String.valueof(Datetime.now()).replace(' ', '').replace(':', '').replace('-', '');
+        Integer randomInt = Integer.valueOf(Math.rint(Math.random() * 1000000));
+        String uniqueName = orgId + dateString + randomInt;
+
+        User u = new User();
+        u.IsActive          = true;
+        u.TimeZoneSidKey    = UserInfo.getTimeZone().toString();
+        u.LocaleSidKey      = UserInfo.getLocale();
+        u.LanguageLocaleKey = UserInfo.getLocale();
+        u.EmailEncodingKey  = 'ISO-8859-1';
+        u.Username          = uniqueName + '@test' + orgId + '.org';
+        u.Email             = uniqueName + '@test' + orgId + '.org';
+        u.FirstName         = firstName;
+        u.LastName          = lastName;
+        u.Alias             = uniqueName.substring(18, 23);
+        u.UserRoleId        = roleId;
+        u.ProfileId         = profileId;
+        return u;
     }
 
     
