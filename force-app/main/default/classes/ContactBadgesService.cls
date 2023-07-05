@@ -107,19 +107,15 @@ public with sharing class ContactBadgesService {
      ****************************************************/
 
     private static Boolean verifyFirstSessionVisit(String recordId) {
-        System.debug(':::: entered verifyFirstSessionVisity');
         Boolean isFirstVisit;
         // Create cache key out of user and contact ids
         String userId = UserInfo.getUserId();
         String cacheContactKey = CACHE_KEY_PREFIX + userId + recordId;
-        System.debug(':::: cacheContactKey --> ' + cacheContactKey);
         // Create instance of session partition
         Cache.SessionPartition part = Cache.Session.getPartition(CACHE_PARTITION_NAME);
         if (part.contains(cacheContactKey)) {
-            System.debug(':::: partition contains key');
             isFirstVisit = false;
         } else {
-            System.debug(':::: partition does not contain key');
             part.put(cacheContactKey, Datetime.now());
             isFirstVisit = true;
         }

@@ -29,9 +29,6 @@ private class ContactBadgesService_Test {
         Boolean foundBirthdayBadge = false;
         for (ContactBadgesService.BadgeDataWrapper badge : wrapperResult) {
             if (badge.label.contains(CONTACT_TITLE)) {
-                System.debug('::::: mets alert message: ' + badge.alertMessage);
-                System.debug('::::: mets alert: ' + badge.hasAlert);
-                System.debug('::::: mets label: ' + badge.label);
                 foundMetsBadge = true;
             }
             if (badge.label.toLowerCase().contains('birthday')) {
