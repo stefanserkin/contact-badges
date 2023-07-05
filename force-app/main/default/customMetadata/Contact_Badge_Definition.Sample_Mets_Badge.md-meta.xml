@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Alert_Message__c</field>
-        <value xsi:type="xsd:string">It&apos;s a New York Met!</value>
+        <value xsi:type="xsd:string">A New York Met</value>
     </values>
     <values>
         <field>Alert__c</field>
@@ -32,7 +32,7 @@
     </values>
     <values>
         <field>Icon_Name__c</field>
-        <value xsi:type="xsd:string">Title</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Is_Sample_Badge__c</field>
