@@ -41,10 +41,6 @@
                 <behavior>Required</behavior>
                 <field>Parent_Object__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Parent_ID_Path__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
@@ -56,8 +52,8 @@
         <label>Criteria 1-Column</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Additional_Detail_Fields__c</field>
+                <behavior>Required</behavior>
+                <field>Parent_ID_Path__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -66,6 +62,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Order_By__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Additional_Detail_Fields__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
@@ -157,7 +157,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h7d000001RHYM</masterLabel>
+        <masterLabel>00h03000001X9lE</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

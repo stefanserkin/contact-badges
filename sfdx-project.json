@@ -6,7 +6,9 @@
       "package": "Contact Badges",
       "versionName": "ver 0.1",
       "versionNumber": "0.1.0.NEXT",
-      "versionDescription": "Contact Badges adds visual highlights of related data to Contact record pages and offers quick navigation to related records."
+      "versionDescription": "Contact Badges adds visual highlights of related data to Contact record pages and offers quick navigation to related records.",
+      "postInstallUrl": "https://serkinsolutions.com/contact-badges#post-installation-steps",
+      "releaseNotesUrl": "https://serkinsolutions.com/contact-badges#release-notes"
     }
   ],
   "name": "ContactBadges",
@@ -20,6 +22,7 @@
     "Contact Badges@0.1.0-3": "04tDn000000B24DIAS",
     "Contact Badges@0.1.0-4": "04tDn000000B24IIAS",
     "Contact Badges@0.1.0-5": "04tDn000000B24NIAS",
-    "Contact Badges@0.1.0-6": "04tDn000000B24SIAS"
+    "Contact Badges@0.1.0-6": "04tDn000000B24SIAS",
+    "Contact Badges@0.1.0-7": "04tDn000000B264IAC"
   }
 }
