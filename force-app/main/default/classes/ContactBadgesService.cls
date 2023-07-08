@@ -3,8 +3,13 @@ public with sharing class ContactBadgesService {
     private static final String CACHE_KEY_PREFIX = 'cb';
     private static final String CACHE_PARTITION_NAME = 'sscb.ContactBadges';
     private static final String DEFAULT_BADGE_FIELDSET = 'Name';
+    @TestVisible
+    private static final String DEFAULT_EXCEPTION = 'An unknown error has occurred';
 
-    @TestVisible static Boolean isTestScenario = false;
+    @TestVisible 
+    static Boolean isTestScenario = false;
+    @TestVisible
+    static Boolean hasTransactionError = false;
 
     /****************************************************
      * Main entry
@@ -57,6 +62,11 @@ public with sharing class ContactBadgesService {
             // In live scenarios, must be an active badge
             if ((isTestScenario && !definition.Is_Sample_Badge__c) || (!isTestScenario && !definition.Active__c)) {
                 continue;
+            }
+
+            // Throw test error
+            if (isTestScenario && hasTransactionError) {
+                throw new ContactBadgesException(DEFAULT_EXCEPTION);
             }
 
             // Query for related records

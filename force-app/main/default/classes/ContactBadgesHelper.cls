@@ -237,9 +237,9 @@ public with sharing class ContactBadgesHelper {
                 2, 
                 m.group().length() - 1
             );
-            result = String.valueOf(mapObjFields.get(fieldApiName)) != null ?
-                result.replace(m.group(0), String.valueOf(mapObjFields.get(fieldApiName))) :
-                result.replace(m.group(0), '');
+            result = mapObjFields.containsKey(fieldApiName)
+                ? result.replace(m.group(0), String.valueOf(mapObjFields.get(fieldApiName)))
+                : result.replace(m.group(0), '');
         }
         return result;
     }

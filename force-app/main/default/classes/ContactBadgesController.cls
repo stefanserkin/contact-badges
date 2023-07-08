@@ -6,7 +6,9 @@ public with sharing class ContactBadgesController {
             List<ContactBadgesService.BadgeDataWrapper> wrapperResult = ContactBadgesService.getBadgeDataForContact(recordId, accountId);
             return wrapperResult;
         } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            AuraHandledException ex = new AuraHandledException(e.getMessage());
+            ex.setMessage(e.getMessage());
+            throw ex;
         }
     }
 

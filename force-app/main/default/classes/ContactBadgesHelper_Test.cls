@@ -5,6 +5,7 @@ private class ContactBadgesHelper_Test {
     private static final String CONTACT_EMAIL = 'capn@mets.com';
 
     private static Contact_Badge_Definition__mdt birthdayBadgeDefinition = Contact_Badge_Definition__mdt.getInstance('Sample_Birthday_Badge');
+    private static Contact_Badge_Definition__mdt metsBadgeDefinition     = Contact_Badge_Definition__mdt.getInstance('Sample_Mets_Badge');
 
     @TestSetup
     static void makeData() {
@@ -69,6 +70,16 @@ private class ContactBadgesHelper_Test {
         
         String expectedString = birthdayBadgeDefinition.Icon_Name__c;
         System.assertEquals(expectedString, badgeIconName, 'Unexpected string for icon name');
+    }
+
+    @IsTest
+    static void testMergeFields() {
+        Contact ct = [SELECT Id, Title FROM Contact WHERE Email = :CONTACT_EMAIL LIMIT 1];
+        Test.startTest();
+        String badgeLabel = ContactBadgesHelper.getBadgeLabel(metsBadgeDefinition, ct);
+        Test.stopTest();
+
+        System.assert(badgeLabel.contains(CONTACT_TITLE), 'Label should have the merged contact title value');
     }
 
 }

@@ -95,6 +95,33 @@ private class ContactBadgesService_Test {
     }
 
     @IsTest
+    static void testCachedBadgeAlerts() {
+        ContactBadgesService.isTestScenario = true;
+
+        Contact ct = [SELECT Id, AccountId FROM Contact WHERE Email = :CONTACT_EMAIL LIMIT 1];
+
+        List<ContactBadgesService.BadgeDataWrapper> originalWrapperResult = new List<ContactBadgesService.BadgeDataWrapper>();
+        originalWrapperResult = ContactBadgesService.getBadgeDataForContact(ct.Id, ct.AccountId);
+        for (ContactBadgesService.BadgeDataWrapper badge : originalWrapperResult) {
+            if (badge.label.contains(CONTACT_TITLE)) {
+                System.assert(badge.hasAlert, 'The Mets badge in the first request should have an alert');
+            }
+        }
+
+        List<ContactBadgesService.BadgeDataWrapper> refreshedWrapperResult = new List<ContactBadgesService.BadgeDataWrapper>();
+        Test.startTest();
+        refreshedWrapperResult = ContactBadgesService.getBadgeDataForContact(ct.Id, ct.AccountId);
+        Test.stopTest();
+
+        for (ContactBadgesService.BadgeDataWrapper badge : refreshedWrapperResult) {
+            if (badge.label.contains(CONTACT_TITLE)) {
+                System.assert(!badge.hasAlert, 'The Mets badge in the second request should not have an alert');
+            }
+        }
+
+    }
+
+    @IsTest
     static void testInsufficientAccess() {
         UserRole uRole = new UserRole(DeveloperName = 'TestCustomRole', Name = 'Test Custom Role');
         insert uRole;
