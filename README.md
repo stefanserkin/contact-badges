@@ -4,6 +4,11 @@ Contact record pages can get overwhelming. Organizations want to collect as much
 
 ## Installation
 
+<a href="https://githubsfdeploy.herokuapp.com?owner=SerkinSolutions&repo=contact-badges&ref=main">
+  <img alt="Deploy to Salesforce"
+       src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
+</a>
+
 Current Release (0.1)
 - [Production](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tDn000000B269IAC)
 - [Sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tDn000000B269IAC)
