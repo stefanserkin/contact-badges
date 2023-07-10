@@ -4,8 +4,9 @@
       "path": "force-app",
       "default": true,
       "package": "Contact Badges",
-      "versionName": "ver 0.1",
-      "versionNumber": "0.1.0.NEXT",
+      "versionName": "ver 0.2",
+      "versionNumber": "0.2.0.NEXT",
+      "ancestorVersion": "0.1.0",
       "versionDescription": "Contact Badges adds visual highlights of related data to Contact record pages and offers quick navigation to related records.",
       "postInstallUrl": "https://serkinsolutions.com/contact-badges#post-installation-steps",
       "releaseNotesUrl": "https://serkinsolutions.com/contact-badges#release-notes"
@@ -24,6 +25,7 @@
     "Contact Badges@0.1.0-5": "04tDn000000B24NIAS",
     "Contact Badges@0.1.0-6": "04tDn000000B24SIAS",
     "Contact Badges@0.1.0-7": "04tDn000000B264IAC",
-    "Contact Badges@0.1.0-8": "04tDn000000B269IAC"
+    "Contact Badges@0.1.0-8": "04tDn000000B269IAC",
+    "Contact Badges@0.2.0-1": "04tDn000000B26JIAS"
   }
 }
