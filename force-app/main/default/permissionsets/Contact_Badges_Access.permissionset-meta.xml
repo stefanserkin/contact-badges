@@ -4,15 +4,11 @@
         <apexClass>ContactBadgesController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <customMetadataTypeAccesses>
-        <enabled>true</enabled>
-        <name>Contact_Badge_Definition__mdt</name>
-    </customMetadataTypeAccesses>
     <customPermissions>
         <enabled>true</enabled>
         <name>Contact_Badges_View_Access</name>
     </customPermissions>
-    <description>Access to Contact Badge Definition custom metadata</description>
+    <description>Access to view the Contact Badges component</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Contact Badges Access</label>
 </PermissionSet>
