@@ -5,3 +5,6 @@
 // You can also execute the entire file by running the command:
 //     SFDX: Execute Anonymous Apex with Editor Contents
 
+Contact ct = [SELECT id, FirstName, LastName from contact];
+Sobject obj = ct;
+System.debug(obj);
