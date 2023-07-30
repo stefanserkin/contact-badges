@@ -7,7 +7,7 @@
       "versionName": "ver 0.2",
       "versionNumber": "0.2.0.NEXT",
       "ancestorVersion": "0.1.0",
-      "versionDescription": "Contact Badges adds visual highlights of related data to Contact record pages and offers quick navigation to related records.",
+      "versionDescription": "Contact Badges adds visual highlights of related data to Contact record pages and offers quick navigation to related records",
       "postInstallUrl": "https://serkinsolutions.com/contact-badges#post-installation-steps",
       "releaseNotesUrl": "https://serkinsolutions.com/contact-badges#release-notes"
     }
@@ -15,7 +15,7 @@
   "name": "ContactBadges",
   "namespace": "sscb",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "57.0",
+  "sourceApiVersion": "58.0",
   "packageAliases": {
     "Contact Badges": "0HoDn000000bmwPKAQ",
     "Contact Badges@0.1.0-1": "04tDn000000B23oIAC",
@@ -28,6 +28,7 @@
     "Contact Badges@0.1.0-8": "04tDn000000B269IAC",
     "Contact Badges@0.2.0-1": "04tDn000000B26JIAS",
     "Contact Badges@0.2.0-2": "04tDn000000B26OIAS",
-    "Contact Badges@0.2.0-3": "04tDn000000B27CIAS"
+    "Contact Badges@0.2.0-3": "04tDn000000B27CIAS",
+    "Contact Badges@0.2.0-4": "04tDn000000B285IAC"
   }
 }

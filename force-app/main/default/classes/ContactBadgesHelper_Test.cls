@@ -82,4 +82,17 @@ private class ContactBadgesHelper_Test {
         System.assert(badgeLabel.contains(CONTACT_TITLE), 'Label should have the merged contact title value');
     }
 
+    @IsTest
+    static void testBadMergeField() {
+        String baseString = 'Merge this: ';
+        String badMergeField = '{!BadMergeField__c}';
+
+        Test.startTest();
+        SObject ct = [SELECT Id, AccountId FROM Contact WHERE Email = :CONTACT_EMAIL LIMIT 1];
+        String result = ContactBadgesHelper.replaceMergeFieldsWithValues(baseString + badMergeField, ct);
+        Test.stopTest();
+
+        System.assertEquals(baseString, result, 'The bad merge field should have been removed');
+    }
+
 }

@@ -44,8 +44,8 @@ public with sharing class ContactBadgesService {
      * @param String Contact Id (recordId)
      * @param String Contact's Account Id (accountId)
      ****************************************************/
-
-    private static List<BadgeDataWrapper> getBadgeDataWrappers(
+    @TestVisible
+    public static List<BadgeDataWrapper> getBadgeDataWrappers(
         List<Contact_Badge_Definition__mdt> lstDefinitions,
         String recordId, 
         String accountId
@@ -69,11 +69,16 @@ public with sharing class ContactBadgesService {
                 throw new ContactBadgesException(DEFAULT_EXCEPTION);
             }
 
+            // Check query limit to ensure current query won't exceed it
+            if (Limits.getQueries() == Limits.getLimitQueries()) {
+                break;
+            }
+            
             // Query for related records
             String query = ContactBadgesHelper.getQueryFromDefinition(definition);
             List<SObject> queryResults;
             try {
-                queryResults = Database.query(query);
+                queryResults = Database.query(query, AccessLevel.USER_MODE);
             } catch (System.QueryException ex) {
                 // User does not have required CRUD/FLS access
                 continue;

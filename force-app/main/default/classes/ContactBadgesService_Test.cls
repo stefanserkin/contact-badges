@@ -5,6 +5,8 @@ private class ContactBadgesService_Test {
     private static final String CONTACT_TITLE = 'Third Baseman';
     private static final String CONTACT_EMAIL = 'capn@mets.com';
 
+    private static Integer fakeIdNumber = 1;
+
     @TestSetup
     static void makeData() {
         Account acc = new Account(Name='Wright Household');
@@ -149,7 +151,33 @@ private class ContactBadgesService_Test {
         System.assert(wrapperResult.isEmpty(), 'User with insufficient access should not have received badge results');
     }
 
-    private static User createTestUser(Id roleId, Id profileId, String firstName, String lastName) {
+    @IsTest
+    static void testQueryLimit() {
+        Contact ct = [SELECT Id, AccountId FROM Contact WHERE Email = :CONTACT_EMAIL LIMIT 1];
+        Opportunity opp = new Opportunity(Name = 'Big Test Opp', AccountId = ct.AccountId, StageName = 'Closed Won', Amount = 50000, CloseDate = Date.today());
+        insert opp;
+
+        Test.startTest();
+        List<Contact_Badge_Definition__mdt> lstDefinitions = createMockDefinitions(101);
+
+
+        List<ContactBadgesService.BadgeDataWrapper> lstWrappers;
+        lstWrappers = ContactBadgesService.getBadgeDataWrappers(
+            lstDefinitions, 
+            ct.Id, 
+            ct.AccountId
+        );
+        System.assertEquals(Limits.getQueries(), lstWrappers.size(), 'Should have received a wrapper for each query');
+        System.assertEquals(Limits.getQueries(), Limits.getLimitQueries(), 'Should have maxed out query limit');
+        Test.stopTest();
+    }
+
+    private static User createTestUser(
+        Id roleId, 
+        Id profileId, 
+        String firstName, 
+        String lastName
+    ) {
         String orgId      = UserInfo.getOrganizationId();
         String dateString = String.valueof(Datetime.now()).replace(' ', '').replace(':', '').replace('-', '');
         Integer randomInt = Integer.valueOf(Math.rint(Math.random() * 1000000));
@@ -171,5 +199,39 @@ private class ContactBadgesService_Test {
         return u;
     }
 
-    
+    private static List<Contact_Badge_Definition__mdt> createMockDefinitions(
+        Integer numberOfDefinitions
+    ) {
+        String definitionString = '[';
+        for (Integer i = 0; i < numberOfDefinitions; i++) {
+            String defName = 'TestDefinition' + String.valueOf(i);
+            definitionString += 
+                '{"Id": "' + getFakeDefinitionId() + '",' +
+                ' "Label": "' + defName + '",' +
+                ' "DeveloperName": "' + defName + '",' +
+                ' "sscb__Active__c": true,' + 
+                ' "sscb__Sort_Order__c": "' + String.valueOf(i) + '",' +
+                ' "sscb__Child_Object__c": "Opportunity",' +
+                ' "sscb__Parent_Object__c": "Account",' + 
+                ' "sscb__Parent_ID_Path__c": "AccountId",' +
+                ' "sscb__Filter_Criteria__c": "Amount >= ' + Integer.valueOf(i) + '",' + 
+                ' "sscb__Label__c": "Opp Over ' + String.valueOf(i) + '"}';
+            if (i < (numberOfDefinitions - 1)) {
+                definitionString += ', ';
+            }
+        }
+        definitionString += ']';
+        List<Contact_Badge_Definition__mdt> lstDefinitions;
+        lstDefinitions = (List<Contact_Badge_Definition__mdt>) JSON.deserialize( 
+            definitionString, 
+            List<Contact_Badge_Definition__mdt>.class 
+        );
+        return lstDefinitions;
+    }
+
+    public static Id getFakeDefinitionId() {
+		String result = String.valueOf(fakeIdNumber++);
+		return (Id) ('m00' + '0'.repeat(12 - result.length()) + result);
+	}
+
 }

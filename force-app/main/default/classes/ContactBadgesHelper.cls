@@ -7,8 +7,6 @@ public with sharing class ContactBadgesHelper {
     private static final String DEFAULT_BACKGROUND_COLOR = '#D3D3D3';
     private static final String DEFAULT_LABEL_COLOR = '#000000';
     private static final String DEFAULT_ICON_NAME = 'utility:info';
-    private static final String BADGE_LABEL_TYPE_VALUE = 'Value';
-    private static final String BADGE_LABEL_TYPE_FIELD_REFERENCE = 'Field Reference';
     private static final String MERGE_FIELD_REGEX = '\\{!.+?\\}';
 
     /****************************************************
@@ -46,11 +44,11 @@ public with sharing class ContactBadgesHelper {
         String query = 'SELECT Id ';
         Set<String> setDetailFields = getFieldsForSelector(definition);
         for (String field : setDetailFields) {
-            query += ', ' + String.escapeSingleQuotes(field) + ' ';
+            query += ', ' + field + ' ';
         }
 
         // FROM
-        query += 'FROM ' + String.escapeSingleQuotes(definition.Child_Object__c) + ' ';
+        query += 'FROM ' + definition.Child_Object__c + ' ';
 
         // WHERE
         query += 'WHERE ' + definition.Parent_ID_Path__c + ' = :';
@@ -58,7 +56,6 @@ public with sharing class ContactBadgesHelper {
         if (!String.isBlank(definition.Filter_Criteria__c)) {
             query += 'AND ' + definition.Filter_Criteria__c + ' ';
         }
-        query += 'WITH USER_MODE ';
         
         // ORDER BY
         if (!String.isBlank(definition.Order_By__c)) {
@@ -223,7 +220,7 @@ public with sharing class ContactBadgesHelper {
      * @param String String containing merge fields to be replaced
      * @param SObject The api name of the sObject type
      ****************************************************/
-
+    @TestVisible
     private static String replaceMergeFieldsWithValues(
         String input,
         SObject obj
@@ -243,6 +240,5 @@ public with sharing class ContactBadgesHelper {
         }
         return result;
     }
-
 
 }
