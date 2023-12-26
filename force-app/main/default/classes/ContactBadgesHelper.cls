@@ -1,3 +1,10 @@
+/************************************************************************
+ * @description Provides utility methods for constructing dynamic SOQL queries 
+ *  and assembling badge data wrappers
+ * 
+ * @author SerkinSolutions
+ * @date 2023
+ ************************************************************************/
 public with sharing class ContactBadgesHelper {
     
     /****************************************************

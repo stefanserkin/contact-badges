@@ -1,3 +1,7 @@
+/************************************************************************
+ * @author SerkinSolutions
+ * @date 2023
+ ************************************************************************/
 @IsTest
 private class ContactBadgeDefinitionWrapper_Test {
     

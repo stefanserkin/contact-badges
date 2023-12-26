@@ -1,3 +1,11 @@
+/************************************************************************
+ * @description Handles the bulk of the logic in retrieving Contact Badge Definition 
+ *  custom metadata records, querying for sObjects based on their configuration, 
+ *  and assembling badge data wrappers to return to the caller.
+ * 
+ * @author SerkinSolutions
+ * @date 2023
+ ************************************************************************/
 public with sharing class ContactBadgesService {
 
     private static final String CACHE_KEY_PREFIX = 'cb';
@@ -80,7 +88,7 @@ public with sharing class ContactBadgesService {
             try {
                 queryResults = Database.query(query, AccessLevel.USER_MODE);
             } catch (System.QueryException ex) {
-                // User does not have required CRUD/FLS access
+                // User does not have required object, FLS, or sharing access
                 continue;
             }
 

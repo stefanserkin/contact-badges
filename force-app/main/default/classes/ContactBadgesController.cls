@@ -1,3 +1,10 @@
+/************************************************************************
+ * @description Retrieves badge data from the ContactBadgesService class.
+ *  Called by the contactBadges component.
+ * 
+ * @author SerkinSolutions
+ * @date 2023
+ ************************************************************************/
 public with sharing class ContactBadgesController {
 
     @AuraEnabled(cacheable=true)

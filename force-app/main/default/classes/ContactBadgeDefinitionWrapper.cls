@@ -1,3 +1,10 @@
+/************************************************************************
+ * @description Used to sort contact badge definition custom metadata records 
+ *  by their Sort Order values.
+ * 
+ * @author SerkinSolutions
+ * @date 2023
+ ************************************************************************/
 public with sharing class ContactBadgeDefinitionWrapper implements Comparable {
 
     public Contact_Badge_Definition__mdt cbd;
